@@ -17,9 +17,11 @@ end
 git '/opt/chef_mruby/mruby' do
   action :sync
   repository 'https://github.com/mruby/mruby.git'
+  notifies :run, 'bash[build mruby]', :immediately
 end
 
 bash 'build mruby' do
+  action :nothing
   flags '-ex'
   cwd ::File.join(node[:mruby][:build_dir], 'mruby')
   code <<-__EOL__

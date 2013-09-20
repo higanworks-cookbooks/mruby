@@ -4,6 +4,13 @@ mruby Cookbook
 This cookbook installs mruby.
 
 
+TODO
+----
+
+- create LWRP
+- Usage ditail
+
+
 Requirements
 ------------
 

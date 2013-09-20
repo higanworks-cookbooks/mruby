@@ -24,7 +24,7 @@ bash 'build mruby' do
   if node[:mruby][:use_chef_ruby]
     rubybin = RbConfig.ruby
   else
-    rubybin = `which ruby`
+    rubybin = `which ruby`.chomp
   end
   action :nothing
   flags '-ex'

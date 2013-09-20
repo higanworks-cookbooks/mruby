@@ -30,5 +30,6 @@ suites:
     rbenv_ruby:
       user: root
       group: root
+      root_path: "CONFIGURE_OPTS='--disable-install-doc' #{node[:rbenv][:install_prefix]}/rbenv"
     mruby:
       use_chef_ruby: false

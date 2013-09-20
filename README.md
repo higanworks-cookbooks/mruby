@@ -3,27 +3,38 @@ mruby Cookbook
 
 This cookbook installs mruby.
 
+- /usr/local/bin/mruby
+- /usr/local/bin/mirb
+- /usr/local/bin/mrbc
 
 TODO
 ----
 
 - create LWRP
-- Usage ditail
 
 
 Requirements
 ------------
 
-- Ruby
+- make
 
 Attributes
 ----------
 
 
+- `[:mruby][:build_dir] = '/opt/chef_mruby'` # directory to build
+- `[:mruby][:use_chef_ruby] = true`          # Use ruby chef runtime.
+- `[:mruby][:add_path] = '/usr/local/bin'`   # create symlink to. If you don't need link, set nil.
+- `[:mruby][:bins] = %w(mruby mrbc mirb)`    # symlink target binaries
+
+
 Usage
 -----
 
-Just include `mruby` in your node's `run_list`
+include your `runlist`
+
+- `build-essential` (optional)
+- `mruby`
 
 
 Test

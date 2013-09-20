@@ -8,9 +8,18 @@ platforms:
   driver_config:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+- name: centos-6.4
+  driver_config:
+    box: opscode-centos-6.4
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
 
 suites:
 - name: default
+  run_list:
+    - "recipe[build-essential::default]"
+    - "recipe[mruby]"
+  attributes: {}
+- name: rbenv
   run_list:
     - "recipe[build-essential::default]"
     - "recipe[rbenv]"
@@ -21,5 +30,5 @@ suites:
     rbenv_ruby:
       user: root
       group: root
-
-
+    mruby:
+      use_chef_ruby: false

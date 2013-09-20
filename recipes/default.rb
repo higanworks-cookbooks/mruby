@@ -11,7 +11,7 @@ directory node[:mruby][:build_dir] do
   action :create
   owner 'root'
   group 'root'
-  mode 0700
+  mode 0755
 end
 
 git '/opt/chef_mruby/mruby' do
@@ -21,17 +21,24 @@ git '/opt/chef_mruby/mruby' do
 end
 
 bash 'build mruby' do
+  if node[:mruby][:use_chef_ruby]
+    rubybin = RbConfig.ruby
+  else
+    rubybin = `which ruby`
+  end
   action :nothing
   flags '-ex'
   cwd ::File.join(node[:mruby][:build_dir], 'mruby')
   code <<-__EOL__
-     `which ruby` minirake
+     #{rubybin} minirake
   __EOL__
 end
 
-if node[:mruby][:add_path]
-  link ::File.join(node[:mruby][:add_path], 'mruby') do
-    action :create
-    to ::File.join(node[:mruby][:build_dir], 'mruby' , 'bin',  'mruby')
+node[:mruby][:bins].each do |binary|
+  if node[:mruby][:add_path]
+    link ::File.join(node[:mruby][:add_path], binary) do
+      action :create
+      to ::File.join(node[:mruby][:build_dir], 'mruby' , 'bin',  binary)
+    end
   end
 end

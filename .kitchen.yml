@@ -18,7 +18,11 @@ suites:
   run_list:
     - "recipe[build-essential::default]"
     - "recipe[mruby]"
-  attributes: {}
+  attributes:
+    mruby:
+      build_options:
+        user_gems:
+          -  [':git', 'https://github.com/iij/mruby-io.git']
 - name: rbenv
   run_list:
     - "recipe[build-essential::default]"

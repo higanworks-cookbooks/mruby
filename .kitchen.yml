@@ -38,3 +38,18 @@ suites:
       root_path: "CONFIGURE_OPTS='--disable-install-doc' #{node[:rbenv][:install_prefix]}/rbenv"
     mruby:
       use_chef_ruby: false
+- name: ngx_mruby
+  run_list:
+    - "recipe[build-essential::default]"
+    - "recipe[mruby::ngx_mruby]"
+    - "recipe[nginx::source]"
+  attributes:
+    nginx:
+      version: 1.4.2
+      configure_flags: ["--with-debug"]
+      source:
+    mruby:
+      force_rebuild: true
+      build_options:
+        user_gems:
+          -  [':git', 'https://github.com/iij/mruby-io.git']

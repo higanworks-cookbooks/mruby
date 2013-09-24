@@ -1,0 +1,32 @@
+## This recipe should use with nginx cookbook(opscode)
+## add to run_list nginx::source after this recipe
+
+include_recipe 'mruby::default'
+
+unless node[:nginx]
+  unless node[:nginx][:configure_flags]
+    node.set[:nginx] = Mash.new
+    node.set[:nginx][:configure_flags] = Array.new
+  end
+end
+
+git ::File.join(node[:mruby][:build_dir],'ngx_mruby') do
+  action :sync
+  reference 'master'
+  repository 'https://github.com/matsumoto-r/ngx_mruby.git'
+  enable_submodules true
+end
+
+bash 'sync_built_mruby' do
+  code <<-EOL
+    rsync -avz #{::File.join(node[:mruby][:build_dir],'mruby/')} #{::File.join(node[:mruby][:build_dir],'ngx_mruby', 'mruby/')}
+  EOL
+end
+
+
+ngx_mruby_modules = [
+  "--add-module=#{::File.join(node[:mruby][:build_dir],'ngx_mruby')}",
+  "--add-module=#{::File.join(node[:mruby][:build_dir],'ngx_mruby/dependence/ngx_devel_kit')}"
+]
+
+node.set[:nginx][:configure_flags] = node[:nginx][:configure_flags].concat(ngx_mruby_modules)

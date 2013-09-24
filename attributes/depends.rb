@@ -1,3 +1,4 @@
 default[:mruby][:depend_pkgs] = [
-  'git'
+  'git',
+  'rsync'
 ]

@@ -1,0 +1,16 @@
+# This file was created by chef for <%= node[:hostname] %>
+
+MRuby::Build.new do |conf|
+  toolchain :gcc
+
+  conf.bins = <%= @bins %>
+
+  # mruby's default GEMs
+  conf.gembox 'default'
+
+  # user-defined GEMs
+  <% @user_gems.each do |gem| %>
+  conf.gem <%= gem[0] %> => '<%= gem[1] %>'
+  <% end %>
+end
+

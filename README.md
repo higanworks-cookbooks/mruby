@@ -162,16 +162,18 @@ nginx version: nginx/1.4.2
 built by gcc 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
 TLS SNI support enabled
 configure arguments:
- --prefix=/opt/nginx-1.4.2
- --conf-path=/etc/nginx/nginx.conf
- --sbin-path=/opt/nginx-1.4.2/sbin/nginx
- --with-debug
- --with-http_ssl_module
- --with-http_geoip_module
- --with-ld-opt='-Wl,-R,/usr/local/lib -L /usr/local/lib'
- --with-http_realip_module
- --with-http_stub_status_module
- --with-http_gzip_static_module
+--prefix=/opt/nginx-1.4.2
+--conf-path=/etc/nginx/nginx.conf
+--sbin-path=/opt/nginx-1.4.2/sbin/nginx
+--with-debug
+--add-module=/opt/chef_mruby/ngx_mruby
+--add-module=/opt/chef_mruby/ngx_mruby/dependence/ngx_devel_kit
+--with-http_ssl_module
+--with-http_geoip_module
+--with-ld-opt='-Wl,-R,/usr/local/lib -L /usr/local/lib'
+--with-http_realip_module
+--with-http_stub_status_module
+--with-http_gzip_static_module
 ```
 
 

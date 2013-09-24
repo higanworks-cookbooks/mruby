@@ -3,13 +3,6 @@
 
 include_recipe 'mruby::default'
 
-unless node[:nginx]
-  unless node[:nginx][:configure_flags]
-    node.set[:nginx] = Mash.new
-    node.set[:nginx][:configure_flags] = Array.new
-  end
-end
-
 git ::File.join(node[:mruby][:build_dir],'ngx_mruby') do
   action :sync
   reference node[:mruby][:ngx_mruby][:git_refernce]
@@ -29,6 +22,6 @@ ngx_mruby_modules = [
   "--add-module=#{::File.join(node[:mruby][:build_dir],'ngx_mruby/dependence/ngx_devel_kit')}"
 ]
 
-node.run_state['nginx_configure_flags'] =
-  node.run_state['nginx_configure_flags'] | ngx_mruby_modules
+node.set[:nginx][:configure_flags] =
+  node[:nginx][:configure_flags] | ngx_mruby_modules
 

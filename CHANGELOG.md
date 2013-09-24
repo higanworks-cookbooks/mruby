@@ -3,6 +3,11 @@ mruby CHANGELOG
 
 This file is used to list changes made in each version of the mruby cookbook.
 
+0.3.1
+-----
+
+- feature: ngx_mruby module helper
+
 0.3.0
 -----
 

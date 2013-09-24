@@ -1,5 +1,5 @@
 ## This recipe should use with nginx cookbook(opscode)
-## add to run_list nginx::source after this recipe
+## add to run_list nginx with set attribute node[:nginx][:install_method] == source after this recipe
 
 include_recipe 'mruby::default'
 

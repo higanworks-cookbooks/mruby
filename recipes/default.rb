@@ -16,7 +16,7 @@ end
 
 git ::File.join(node[:mruby][:build_dir],'mruby') do
   action :sync
-  reference 'master'
+  reference node[:mruby][:git_refernce]
   repository 'https://github.com/mruby/mruby.git'
   notifies :create, 'template[mruby_build_config]', :immediately
   notifies :run, 'bash[build mruby]', :immediately

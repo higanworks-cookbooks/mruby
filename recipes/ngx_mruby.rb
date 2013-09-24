@@ -12,7 +12,7 @@ end
 
 git ::File.join(node[:mruby][:build_dir],'ngx_mruby') do
   action :sync
-  reference 'master'
+  reference node[:mruby][:ngx_mruby][:git_refernce]
   repository 'https://github.com/matsumoto-r/ngx_mruby.git'
   enable_submodules true
 end
@@ -29,4 +29,6 @@ ngx_mruby_modules = [
   "--add-module=#{::File.join(node[:mruby][:build_dir],'ngx_mruby/dependence/ngx_devel_kit')}"
 ]
 
-node.set[:nginx][:configure_flags] = node[:nginx][:configure_flags].concat(ngx_mruby_modules)
+node.run_state['nginx_configure_flags'] =
+  node.run_state['nginx_configure_flags'] | ngx_mruby_modules
+

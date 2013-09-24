@@ -3,6 +3,12 @@ mruby CHANGELOG
 
 This file is used to list changes made in each version of the mruby cookbook.
 
+0.3.0
+-----
+
+- feature: support user gems
+- feature: support force_rebuild
+
 0.2.1
 -----
 

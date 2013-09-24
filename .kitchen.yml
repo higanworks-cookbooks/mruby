@@ -20,6 +20,7 @@ suites:
     - "recipe[mruby]"
   attributes:
     mruby:
+      force_rebuild: true
       build_options:
         user_gems:
           -  [':git', 'https://github.com/iij/mruby-io.git']

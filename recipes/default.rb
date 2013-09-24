@@ -16,6 +16,7 @@ end
 
 git ::File.join(node[:mruby][:build_dir],'mruby') do
   action :sync
+  reference 'master'
   repository 'https://github.com/mruby/mruby.git'
   notifies :create, 'template[mruby_build_config]', :immediately
   notifies :run, 'bash[build mruby]', :immediately
@@ -34,7 +35,11 @@ bash 'build mruby' do
   else
     rubybin = `which ruby`.chomp
   end
-  action :run
+  if node[:mruby][:force_rebuild]
+    action :run
+  else
+    action :nothing
+  end
   flags '-ex'
   environment 'MRUBY_CONFIG' => 'build_config_chef.rb'
   cwd ::File.join(node[:mruby][:build_dir], 'mruby')

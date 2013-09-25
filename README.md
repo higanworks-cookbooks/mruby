@@ -9,6 +9,8 @@ This cookbook installs mruby.
 
 Includes recipe ngx_mruby helper.
 
+[http://community.opscode.com/cookbooks/mruby](http://community.opscode.com/cookbooks/mruby)
+
 Platform
 -------
 
@@ -125,7 +127,7 @@ Usage
 
 add `mruby::ngx_mruby,nginx::default` to run_list.
 
-#### Example
+### Example
 
 **Attributes(test-kitchen format)**
 
@@ -176,6 +178,41 @@ configure arguments:
 --with-http_gzip_static_module
 ```
 
+### Example (JSON style attribute)
+
+```
+{
+  "run_list" : [
+    "recipe[build-essential::default]",
+    "recipe[mruby::ngx_mruby]",
+    "recipe[nginx]"
+  ],
+  "mruby": {
+    "force_rebuild" : true,
+    "build_options" : {
+       "user_gems" : [
+          [":git", "https://github.com/iij/mruby-io.git"]
+        ]
+    }
+  },
+  "nginx" : {
+    "install_method" : "source",
+    "version" : "1.4.2",
+    "configure_flags" : [
+      "--with-debug"
+    ],
+    "source" : {
+    "modules" : [
+      "http_ssl_module",
+      "http_geoip_module",
+      "http_realip_module",
+      "http_stub_status_module",
+      "http_gzip_static_module"
+    ]
+    }
+  }
+}
+```
 
 Test
 ---

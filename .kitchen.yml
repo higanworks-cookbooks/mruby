@@ -57,6 +57,7 @@ suites:
           - http_gzip_static_module
     mruby:
       force_rebuild: true
+      git_refernce: 9b2f4c4423ed11f12d6393ae1f0dd4fe3e51ffa0
       build_options:
         user_gems:
           -  [':git', 'https://github.com/iij/mruby-io.git']

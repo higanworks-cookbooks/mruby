@@ -12,5 +12,22 @@ MRuby::Build.new do |conf|
   <% @user_gems.each do |gem| %>
   conf.gem <%= gem[0] %> => '<%= gem[1] %>'
   <% end %>
+
+  conf.cc do |cc|
+    if ENV['BUILD_TYPE'] == "debug"
+      cc.flags = '-fPIC -g3 -Wall -Werror-implicit-function-declaration'
+    else
+      cc.flags << '-fPIC'
+    end
+    if ENV['BUILD_BIT'] == "64"
+      cc.flags << ' -DMRB_INT64'
+    end
+  end
+
+  conf.linker do |linker|
+    if ENV['BUILD_BIT'] == "64"
+      linker.flags = '-DMRB_INT64'
+    end
+  end
 end
 

@@ -64,13 +64,13 @@ suites:
 - name: mod_mruby
   run_list:
     - "recipe[build-essential::default]"
-    - "recipe[apache2]"
     - "recipe[mruby::mod_mruby]"
+    - "recipe[apache2::default]"
   attributes:
     apache:
     mruby:
+      build_type: debug
       force_rebuild: true
       git_refernce: abe6db945491105ac265884990b73af0a073d16d
       build_options:
         user_gems:
-          -  [':git', 'https://github.com/iij/mruby-io.git']

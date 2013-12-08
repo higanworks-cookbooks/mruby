@@ -3,12 +3,20 @@
 
 include_recipe 'mruby::default'
 
+#node.run_context.cookbook_collection[:apache2].definition_filenames.each do |defs|
+#  load defs
+#end
+
 case node[:platform_family]
 when 'debian'
   include_recipe 'apt::default'
+  include_recipe 'apache2'
   package node[:apache][:package] + '-dev'
+  apxs_cmd = 'apxs2'
 when 'rhel'
+  include_recipe 'apache2'
   package node[:apache][:package] + '-devel'
+  apxs_cmd = 'apxs'
 end
 
 git ::File.join(node[:mruby][:build_dir],'mod_mruby') do
@@ -24,13 +32,13 @@ bash 'sync_built_mruby' do
   EOL
 end
 
-bash 'build_mode_mruby' do
+bash 'build_mod_mruby' do
   flags '-e'
   cwd ::File.join(node[:mruby][:build_dir],'mod_mruby')
   path [::File.dirname(RbConfig.ruby)]
   environment 'RAKE_PATH' => ::File.join(::File.dirname(RbConfig.ruby), 'rake')
   code <<-EOL
-    ./configure `which apxs2` `which apachectl`
+    ./configure `which #{apxs_cmd}` `which apachectl`
     make
     make install
   EOL

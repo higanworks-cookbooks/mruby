@@ -41,7 +41,8 @@ bash 'build mruby' do
     action :nothing
   end
   flags '-ex'
-  environment 'MRUBY_CONFIG' => 'build_config_chef.rb'
+  environment 'MRUBY_CONFIG' => 'build_config_chef.rb',
+              'BUILD_TYPE' => node[:mruby][:build_type]
   cwd ::File.join(node[:mruby][:build_dir], 'mruby')
   code <<-__EOL__
      #{rubybin} minirake

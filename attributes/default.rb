@@ -5,6 +5,7 @@ default[:mruby][:git_refernce] = 'master'
 
 
 ## for buid_config template
+default[:mruby][:build_type] = ''
 default[:mruby][:build_options][:bins] = %w(mruby mrbc mirb)
 default[:mruby][:build_options][:user_gems] = []
 

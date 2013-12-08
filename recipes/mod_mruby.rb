@@ -3,9 +3,12 @@
 
 include_recipe 'mruby::default'
 
-if node[:platform_family] == 'debian'
+case node[:platform_family]
+when 'debian'
   include_recipe 'apt::default'
   package node[:apache][:package] + '-dev'
+when 'rhel'
+  package node[:apache][:package] + '-devel'
 end
 
 git ::File.join(node[:mruby][:build_dir],'mod_mruby') do
@@ -22,6 +25,7 @@ bash 'sync_built_mruby' do
 end
 
 bash 'build_mode_mruby' do
+  flags '-e'
   cwd ::File.join(node[:mruby][:build_dir],'mod_mruby')
   path [::File.dirname(RbConfig.ruby)]
   environment 'RAKE_PATH' => ::File.join(::File.dirname(RbConfig.ruby), 'rake')

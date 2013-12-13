@@ -65,7 +65,7 @@ suites:
   run_list:
     - "recipe[build-essential::default]"
     - "recipe[mruby::mod_mruby]"
-    - "recipe[apache2::default]"
+    # - "recipe[apache2::default]"
   attributes:
     apache:
     mruby:
@@ -74,3 +74,15 @@ suites:
       git_refernce: abe6db945491105ac265884990b73af0a073d16d
       build_options:
         user_gems:
+          # - [':git', 'git://github.com/iij/mruby-process.git']
+          # - [':git', 'git://github.com/iij/mruby-pack.git']
+          # - [':git', 'git://github.com/iij/mruby-digest.git']
+          - [':git', 'git://github.com/mattn/mruby-json.git']
+          # - [':git', 'git://github.com/mattn/mruby-curl.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-thread.git']
+          # - [':git', 'git://github.com/matsumoto-r/mruby-redis.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-vedis.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-sleep.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-config.git']
+          - [':git', 'git://github.com/masamitsu-murase/mruby-hs-regexp.git']
+

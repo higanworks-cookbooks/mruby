@@ -1,11 +1,6 @@
-## This recipe should use with nginx cookbook(opscode)
-## add to run_list nginx with set attribute node[:nginx][:install_method] == source after this recipe
+## This recipe must use with apache cookbook(community cookbook)
 
 include_recipe 'mruby::default'
-
-#node.run_context.cookbook_collection[:apache2].definition_filenames.each do |defs|
-#  load defs
-#end
 
 case node[:platform_family]
 when 'debian'
@@ -44,4 +39,7 @@ bash 'build_mod_mruby' do
   EOL
 end
 
-## TODO: a2enmod
+# call a2enmod
+apache_module 'mruby' do
+  conf true
+end

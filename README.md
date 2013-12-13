@@ -33,13 +33,13 @@ Requirements
 
 ### Recommends
 
-- 'build-essential' (Opscode)
+- 'build-essential' (Communty)
 
 
-### Suggests
+### Depends
 
-- 'nginx' (Opscode)
-
+- 'nginx' (Communty)
+- 'apache2' (Communty)
 
 
 Attributes
@@ -79,6 +79,15 @@ node[:mruby][:build_options][:user_gems] = [
   - default: `'master'`
 
 
+### mod_mruby.rb
+
+- `node[:mruby][:mod_mruby][:git_refernce]` - branch or tag of mod_mruby repository
+  - default: `'master'`
+
+- node[:apache2][:mod_mruby][:config][:by_line] = puts lines to mruby.conf
+  - default: ['AddHandler mruby-script .rb'] (Array)
+
+
 Recipes
 ----
 
@@ -108,7 +117,7 @@ install `ruby-2.0.0-p247` with rbenv to system global.
 
 #### depends cookbooks
 
-- rbenv cookbook(Community shared)
+- rbenv cookbook(Community)
 
 #### Usage
 
@@ -118,9 +127,19 @@ add `mruby::ruby_install` to run_list.
 
 Regist config option to nginx build options.
 
-#### suggests cookbooks
+#### depends cookbooks
 
-- nginx(Opscode)
+- nginx(Community)
+
+
+### mod_mruby
+
+Build mod_mruby.so and regist config to apache httpd .
+
+#### depends cookbooks
+
+- apache2(Community)
+
 
 Usage
 -----
@@ -225,6 +244,26 @@ Test
 
 `kitchen test`
 
+#### Platforms for test-kitchen
+
+```
+ $ kitchen list
+Instance               Driver   Provisioner  Last Action
+default-ubuntu-1204    Vagrant  ChefSolo     <Not Created>
+default-centos-64      Vagrant  ChefSolo     <Not Created>
+rbenv-ubuntu-1204      Vagrant  ChefSolo     <Not Created>
+rbenv-centos-64        Vagrant  ChefSolo     <Not Created>
+ngx-mruby-ubuntu-1204  Vagrant  ChefSolo     <Not Created>
+ngx-mruby-centos-64    Vagrant  ChefSolo     <Not Created>
+mod-mruby-ubuntu-1204  Vagrant  ChefSolo     <Not Created>
+mod-mruby-centos-64    Vagrant  ChefSolo     <Not Created>
+```
+
+You can test specific recipe.
+
+```
+kitchen converge mod-mruby
+```
 
 Contributing
 ------------

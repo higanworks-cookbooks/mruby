@@ -132,15 +132,6 @@ Regist config option to nginx build options.
 - nginx(Community)
 
 
-### mod_mruby
-
-Build mod_mruby.so and regist config to apache httpd .
-
-#### depends cookbooks
-
-- apache2(Community)
-
-
 Usage
 -----
 
@@ -232,6 +223,83 @@ configure arguments:
   }
 }
 ```
+
+### mod_mruby
+
+Build mod_mruby.so and regist config to apache httpd .
+
+Usage
+-----
+
+add `mruby::mod_mruby` to run_list.
+
+
+#### depends cookbooks
+
+- apache2(Community)
+
+
+### Example
+
+**Attributes(test-kitchen format)**
+
+```
+- name: mod_mruby
+  run_list:
+    - "recipe[build-essential::default]"
+    - "recipe[mruby::mod_mruby]"
+  attributes:
+    apache:
+    mruby:
+      build_type: debug
+      force_rebuild: true
+      git_refernce: abe6db945491105ac265884990b73af0a073d16d
+      build_options:
+        user_gems:
+          # - [':git', 'git://github.com/iij/mruby-process.git']
+          # - [':git', 'git://github.com/iij/mruby-pack.git']
+          # - [':git', 'git://github.com/iij/mruby-digest.git']
+          - [':git', 'git://github.com/mattn/mruby-json.git']
+          # - [':git', 'git://github.com/mattn/mruby-curl.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-thread.git']
+          # - [':git', 'git://github.com/matsumoto-r/mruby-redis.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-vedis.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-sleep.git']
+          - [':git', 'git://github.com/matsumoto-r/mruby-config.git']
+          - [':git', 'git://github.com/masamitsu-murase/mruby-hs-regexp.git']
+```
+
+
+ChefClient converges below.
+
+```
+# httpd -M
+Loaded Modules:
+ core_module (static)
+ mpm_prefork_module (static)
+ http_module (static)
+ so_module (static)
+ mruby_module (shared)
+ alias_module (shared)
+ auth_basic_module (shared)
+ authn_file_module (shared)
+ authz_default_module (shared)
+ authz_groupfile_module (shared)
+ authz_host_module (shared)
+ authz_user_module (shared)
+ autoindex_module (shared)
+ deflate_module (shared)
+ dir_module (shared)
+ env_module (shared)
+ log_config_module (shared)
+ logio_module (shared)
+ mime_module (shared)
+ negotiation_module (shared)
+ setenvif_module (shared)
+ status_module (shared)
+Syntax OK
+```
+
 
 Test
 ---

@@ -41,7 +41,7 @@ suites:
 - name: ngx_mruby
   run_list:
     - "recipe[build-essential::default]"
-    - "recipe[mruby::ngx_mruby]"
+    - "recipe[mruby::ngx_mruby_for_include]"
     - "recipe[nginx]"
   attributes:
     nginx:
@@ -50,11 +50,12 @@ suites:
       configure_flags: ["--with-debug"]
       source:
         modules:
-          - http_ssl_module
-          - http_geoip_module
-          - http_realip_module
-          - http_stub_status_module
-          - http_gzip_static_module
+          - nginx::http_ssl_module
+          - nginx::http_geoip_module
+          - nginx::http_realip_module
+          - nginx::http_stub_status_module
+          - nginx::http_gzip_static_module
+          - mruby::ngx_mruby
     mruby:
       force_rebuild: true
       git_refernce: master

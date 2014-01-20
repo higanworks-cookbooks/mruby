@@ -3,7 +3,12 @@ mruby CHANGELOG
 
 This file is used to list changes made in each version of the mruby cookbook.
 
-4.0.0
+0.4.1
+----
+
+- use run_state for nginx_mruby
+
+0.4.0
 ----
 
 - add cookbook depends nginx, apache2.

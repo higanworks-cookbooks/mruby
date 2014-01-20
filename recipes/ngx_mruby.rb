@@ -22,6 +22,7 @@ ngx_mruby_modules = [
   "--add-module=#{::File.join(node[:mruby][:build_dir],'ngx_mruby/dependence/ngx_devel_kit')}"
 ]
 
-node.set[:nginx][:configure_flags] =
-  node[:nginx][:configure_flags] | ngx_mruby_modules
+node.run_state['nginx_configure_flags'] = [] unless node.run_state['nginx_configure_flags']
+node.run_state['nginx_configure_flags'] =
+  node.run_state['nginx_configure_flags'] | ngx_mruby_modules
 
